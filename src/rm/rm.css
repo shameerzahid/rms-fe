@@ -49,6 +49,16 @@
 
 .page-ratings__head {
   margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.page-ratings__sync {
+  margin: -8px 0 14px;
+  font-size: 0.9rem;
+  color: var(--muted);
 }
 
 .page-ratings__head h2 {

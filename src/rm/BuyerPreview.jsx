@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { FiSend, FiStar, FiMapPin } from 'react-icons/fi'
 import { pageAverage } from './ratings.js'
 
-const today = () => new Date().toISOString().slice(0, 10)
-
 export default function BuyerPreview({ reviews, pages, onCustomerReview }) {
   const [pageId, setPageId] = useState(pages[0]?.id || '')
   const [rating, setRating] = useState(0)
@@ -41,14 +39,7 @@ export default function BuyerPreview({ reviews, pages, onCustomerReview }) {
 
     setSaving(true)
     try {
-      await onCustomerReview({
-        rating,
-        displayName,
-        date: today(),
-        text,
-        source: 'customer',
-        pageIds: [activePageId],
-      })
+      await onCustomerReview(activePageId, { rating, displayName, text })
       setRating(0)
       setDisplayName('')
       setText('')
@@ -160,7 +151,7 @@ export default function BuyerPreview({ reviews, pages, onCustomerReview }) {
           </label>
           {error && <p className="form-error">{error}</p>}
           {thanks && (
-            <p className="buyer__thanks">Thanks — your review is live on this page.</p>
+            <p className="buyer__thanks">Thanks — your review was submitted. It appears on this page once the admin assigns it.</p>
           )}
           <button type="submit" className="btn-primary" disabled={saving}>
             <FiSend />

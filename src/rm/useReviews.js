@@ -23,10 +23,15 @@ export function useReviews() {
   }, [refresh])
 
   async function addReview(fields) {
-    const auth = fields.source !== 'customer'
-    const created = await api.createReview(fields, { auth })
+    const created = await api.createReview(fields)
     setReviews((prev) => [created, ...prev])
     return created
+  }
+
+  // Customer-style review, same moderated path as the Shopify storefront.
+  async function submitCustomerReview(pageId, fields) {
+    await api.submitCustomerReview(pageId, fields)
+    await refresh()
   }
 
   async function updateReview(id, patch) {
@@ -56,6 +61,7 @@ export function useReviews() {
     error,
     refresh,
     addReview,
+    submitCustomerReview,
     updateReview,
     deleteReview,
     assignPages,

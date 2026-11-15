@@ -1,4 +1,5 @@
 const AUTH_KEY = 'rms_admin_auth'
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
 
 export function getSession() {
   try {
@@ -24,7 +25,7 @@ async function request(path, { method = 'GET', body, auth = false } = {}) {
     if (session?.token) headers.Authorization = `Bearer ${session.token}`
   }
 
-  const res = await fetch(path, {
+  const res = await fetch(`${API_BASE}${path}`, {
     method,
     headers,
     body: body !== undefined ? JSON.stringify(body) : undefined,
@@ -43,9 +44,15 @@ export const api = {
   login: (email, password) =>
     request('/api/auth/login', { method: 'POST', body: { email, password } }),
   getPages: () => request('/api/pages'),
-  getReviews: () => request('/api/reviews'),
-  createReview: (fields, { auth = true } = {}) =>
-    request('/api/reviews', { method: 'POST', body: fields, auth }),
+  syncShopify: () => request('/api/shopify/sync', { method: 'POST', auth: true }),
+  getReviews: () => request('/api/reviews', { auth: true }),
+  createReview: (fields) =>
+    request('/api/reviews', { method: 'POST', body: fields, auth: true }),
+  submitCustomerReview: (pageId, fields) =>
+    request(`/api/public/pages/${encodeURIComponent(pageId)}/reviews`, {
+      method: 'POST',
+      body: fields,
+    }),
   updateReview: (id, patch) =>
     request(`/api/reviews/${id}`, { method: 'PATCH', body: patch, auth: true }),
   deleteReview: (id) =>

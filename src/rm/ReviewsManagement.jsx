@@ -15,12 +15,13 @@ export default function ReviewsManagement({ view, api, onNavigate }) {
     loading,
     error,
     addReview,
+    submitCustomerReview,
     updateReview,
     deleteReview,
     assignPages,
     togglePin,
   } = api
-  const { pages, pageTitle } = usePages()
+  const { pages, pageTitle, refresh: refreshPages } = usePages()
 
   const [popup, setPopup] = useState('')
   const [assigning, setAssigning] = useState(null)
@@ -57,7 +58,9 @@ export default function ReviewsManagement({ view, api, onNavigate }) {
 
   return (
     <section className="rm">
-      {view === 'rm-overview' && <PageRatings reviews={reviews} pages={pages} />}
+      {view === 'rm-overview' && (
+        <PageRatings reviews={reviews} pages={pages} onSynced={refreshPages} />
+      )}
       {view === 'rm-add' && <AddReview onAdd={handleAdd} />}
       {view === 'rm-all' && (
         <ReviewList
@@ -85,7 +88,7 @@ export default function ReviewsManagement({ view, api, onNavigate }) {
         <BuyerPreview
           reviews={reviews}
           pages={pages}
-          onCustomerReview={addReview}
+          onCustomerReview={submitCustomerReview}
         />
       )}
 
