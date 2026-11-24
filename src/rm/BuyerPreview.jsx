@@ -151,7 +151,7 @@ export default function BuyerPreview({ reviews, pages, onCustomerReview }) {
           </label>
           {error && <p className="form-error">{error}</p>}
           {thanks && (
-            <p className="buyer__thanks">Thanks — your review was submitted. It appears on this page once the admin assigns it.</p>
+            <p className="buyer__thanks">Thank you! Your review has been submitted successfully.</p>
           )}
           <button type="submit" className="btn-primary" disabled={saving}>
             <FiSend />

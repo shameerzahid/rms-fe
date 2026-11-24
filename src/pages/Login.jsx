@@ -4,8 +4,8 @@ import { api } from '../api.js'
 import './Login.css'
 
 export default function Login({ onLogin }) {
-  const [email, setEmail] = useState('admin@company.com')
-  const [password, setPassword] = useState('admin123')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -54,7 +54,7 @@ export default function Login({ onLogin }) {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@company.com"
+                placeholder="you@company.com"
                 autoComplete="username"
               />
             </span>
@@ -79,8 +79,6 @@ export default function Login({ onLogin }) {
           <button type="submit" disabled={loading}>
             {loading ? 'Signing in…' : 'Continue to dashboard'}
           </button>
-
-          <p className="login__demo">Demo: admin@company.com / admin123</p>
         </form>
       </div>
     </div>

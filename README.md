@@ -13,4 +13,4 @@ API is expected at `http://localhost:4000` (proxied via Vite `/api`).
 
 ## Demo login
 
-Uses backend auth: `admin@company.com` / `admin123`
+Uses backend auth: the admin email and password set in the backend `.env`
